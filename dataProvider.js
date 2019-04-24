@@ -12,9 +12,9 @@ export default class DataProvider {
         return axios.get('https://raw.githubusercontent.com/HongyuJiang/roads_network_vis/master/nodes.csv')
     }
 
-    static getTaxis(){
+    static getTaxisPath(){
 
-        return axios.get('https://raw.githubusercontent.com/HongyuJiang/three.js-tubes/master/data/PipeLine3D.csv')
+        return axios.get('https://raw.githubusercontent.com/HongyuJiang/roads_network_vis/master/realtime.data.csv')
     }
 
 

@@ -8,7 +8,7 @@ import DataProvider from './DataProvider';
 import * as dsv from 'd3-dsv';
 
 // Set your mapbox token here
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiZXhhbXBsZXMiLCJhIjoiY2lqbmpqazdlMDBsdnRva284cWd3bm11byJ9.V6Hg2oYJwMAxeoR9GEzkAA'; // eslint-disable-line
+const MAPBOX_TOKEN = 'pk.eyJ1IjoiaG9uZ3l1amlhbmciLCJhIjoiY2o1Y2VldHpuMDlyNTJxbzh5dmx2enVzNCJ9.y40wPiYB9y6qJE6H4PrzDw'; // eslint-disable-line
 
 //初始化视点
 export const INITIAL_VIEW_STATE = {
@@ -103,7 +103,7 @@ export class App extends Component {
         fp64: false,
         getSourcePosition: d => d.start,
         getTargetPosition: d => d.end,
-        getColor: [0, 0, 0],
+        getColor: [255, 255, 255],
         getWidth,
         pickable: true,
         onHover: this._onHover
@@ -131,7 +131,7 @@ export class App extends Component {
           <StaticMap
             reuseMaps
             //使用mapbox studio设置地图风格
-            mapStyle="mapbox://styles/examples/cjj0b5ie80ec32so5uo8ox21m"
+            mapStyle="mapbox://styles/hongyujiang/cj6hkeqlb4cr62ro999s4o87o"
             preventStyleDiffing={true}
             mapboxApiAccessToken={MAPBOX_TOKEN}
           />
