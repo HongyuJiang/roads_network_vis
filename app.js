@@ -55,10 +55,12 @@ function path_segments_constructor(data){
 
   data = dsv.csvParse(data);
 
+  console.log(data)
+
   data.forEach(function(d){
 
-    let coor =  road_locations_dict[d.road_id]
-    coor[2] = 1000 * parseInt(d.round) 
+    let coor =  road_locations_dict[parseInt(d.road_id) + 1]
+    coor[2] = 100 * parseInt(d.round) 
     //console.log(parseInt(d.round) )
     let occupation = d.occipation
 
@@ -75,7 +77,17 @@ function path_segments_constructor(data){
 
   for (let taxi in taxis_segments_bukets){
 
-    let meta = {'segments':taxis_segments_bukets[taxi]}
+    let sorted_data = taxis_segments_bukets[taxi].sort(function(a,b){
+
+      if (a[2] === b[2]) {
+        return 0;
+      }
+      else {
+          return (a[2] < b[2]) ? -1 : 1;
+      }
+    })
+
+    let meta = {'segments':sorted_data}
 
     trips_data.push(meta)
   }
@@ -136,7 +148,7 @@ export class App extends Component {
 
     //console.log(this.state.time)
     const {
-      loopLength = 50 * 1000, // unit corresponds to the timestamp in source data
+      loopLength = 300 * 100, // unit corresponds to the timestamp in source data
       animationSpeed = 100 // unit time per second
     } = this.props;
     const timestamp = Date.now() / 1000;
