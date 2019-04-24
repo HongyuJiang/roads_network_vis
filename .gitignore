@@ -1,0 +1,14 @@
+
+node_modules/
+
+package-lock.json
+
+.vscode/
+.project
+.idea
+.DS_Store
+*.zip
+*.rar
+*.log
+.exit_code
+*.min.js
