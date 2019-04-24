@@ -12,9 +12,9 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoiZXhhbXBsZXMiLCJhIjoiY2lqbmpqazdlMDBsdnRva284cWd
 
 //初始化视点
 export const INITIAL_VIEW_STATE = {
-  latitude: 39.9924284636252880,
-  longitude: 116.3880329911925600,
-  zoom: 17.5,
+  latitude: 40.884127,
+  longitude: -74.021807,
+  zoom: 14.5,
   maxZoom: 25,
   pitch: 50,
   bearing: 0
@@ -29,27 +29,13 @@ function path_handle(data){
 
   data.forEach(function(d){
 
-    let vectors = d.line.split(', ')
+    let startPoints = [parseFloat(d.startX), parseFloat(d.startY), 10]
 
-    let startPoints = vectors[0].split(' ') 
+    let endPoints = [parseFloat(d.endX), parseFloat(d.endY), 10]
 
-    let endPoints = vectors[1].split(' ') 
+    let name = d.link_id + ': ' + d.street_length
 
-    for(let i=0;i<startPoints.length;i++){
-
-      startPoints[i] = parseFloat(startPoints[i])
-    }
-
-    for(let i=0;i<endPoints.length;i++){
-
-      endPoints[i] = parseFloat(endPoints[i])
-    }
-
-    let name = 'test_name'
-
-    let meta = {'start':[startPoints[0], startPoints[1], -startPoints[2]],
-    'end':[endPoints[0], endPoints[1], -endPoints[2]],
-    'name':name}
+    let meta = {'start':startPoints,'end':endPoints,'name':name}
 
     new_data.push(meta)
   })
@@ -63,7 +49,7 @@ export class App extends Component {
 
     this.state = {
       hoveredObject: null,
-      tubesData:{}
+      linksData:{}
     };
     this._onHover = this._onHover.bind(this);
     this._renderTooltip = this._renderTooltip.bind(this);
@@ -71,11 +57,11 @@ export class App extends Component {
     let that = this
 
     //读取管道数据
-    DataProvider.getTubes().then(response => {
+    DataProvider.getLinks().then(response => {
       
         let data = path_handle(response.data)
 
-        that.setState({tubesData: data})
+        that.setState({linksData: data})
 
         }, error => {
       
@@ -104,16 +90,16 @@ export class App extends Component {
   //绘制图层
   _renderLayers() {
     const {
-      getWidth = 5
+      getWidth = 1
     } = this.props;
 
-    const tubes = this.state.tubesData
+    const roads = this.state.linksData
 
     return [
       //绘制管线
       new LineLayer({
-        id: 'flight-paths',
-        data: tubes,
+        id: 'road-paths',
+        data: roads,
         fp64: false,
         getSourcePosition: d => d.start,
         getTargetPosition: d => d.end,
