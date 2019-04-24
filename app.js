@@ -136,8 +136,8 @@ export class App extends Component {
 
     //console.log(this.state.time)
     const {
-      loopLength = 400 * 1000, // unit corresponds to the timestamp in source data
-      animationSpeed = 30 // unit time per second
+      loopLength = 50 * 1000, // unit corresponds to the timestamp in source data
+      animationSpeed = 100 // unit time per second
     } = this.props;
     const timestamp = Date.now() / 1000;
     const loopTime = loopLength / animationSpeed;
