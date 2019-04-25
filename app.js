@@ -67,7 +67,7 @@ function path_segments_constructor(data){
 
   data.forEach(function(d){
 
-    let coor =  road_locations_dict[parseInt(d.road_id) + 1]
+    let coor =  road_locations_dict[parseInt(d.road_id)]
     let coor2 = [coor[0], coor[1], parseInt(d.round) * 100]
     //console.log(parseInt(d.round) )
     //let occupation = d.occipation
@@ -156,8 +156,8 @@ export class App extends Component {
 
     //console.log(this.state.time)
     const {
-      loopLength = 300 * 100, // unit corresponds to the timestamp in source data
-      animationSpeed = 200 // unit time per second
+      loopLength = 1000 * 100, // unit corresponds to the timestamp in source data
+      animationSpeed = 100 // unit time per second
     } = this.props;
     const timestamp = Date.now() / 1000;
     const loopTime = loopLength / animationSpeed;
