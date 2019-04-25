@@ -14,7 +14,7 @@ export default class DataProvider {
 
     static getTaxisPath(){
 
-        return axios.get('https://raw.githubusercontent.com/HongyuJiang/roads_network_vis/master/realtime.10t.csv')
+        return axios.get('https://raw.githubusercontent.com/HongyuJiang/roads_network_vis/master/realtime.1000t.csv')
     }
 
 
