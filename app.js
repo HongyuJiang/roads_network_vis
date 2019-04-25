@@ -31,15 +31,23 @@ function path_handle(data){
 
   data.forEach(function(d){
 
-    let startPoints = [parseFloat(d.startX), parseFloat(d.startY), 10]
+    d.startX = parseFloat(d.startX)
+    d.endX = parseFloat(d.endX)
+    d.startY = parseFloat(d.startY)
+    d.endY = parseFloat(d.endY)
 
-    let endPoints = [parseFloat(d.endX), parseFloat(d.endY), 10]
+    let startPoints = [d.startX, d.startY, 10]
+
+    let endPoints = [d.endX, d.endY, 10]
 
     let name = d.link_id + ': ' + d.street_length
 
-    let meta = {'start':startPoints,'end':endPoints,'name':name}
+    if(d.startY < 40.876760 && d.startY > 40.702641 && d.startX < -73.905251 && d.startX > -74.022418){
 
-    new_data.push(meta)
+      let meta = {'start':startPoints,'end':endPoints,'name':name}
+
+      new_data.push(meta)
+    }
 
     road_locations_dict[d.link_id] = startPoints
   })
@@ -149,7 +157,7 @@ export class App extends Component {
     //console.log(this.state.time)
     const {
       loopLength = 300 * 100, // unit corresponds to the timestamp in source data
-      animationSpeed = 100 // unit time per second
+      animationSpeed = 200 // unit time per second
     } = this.props;
     const timestamp = Date.now() / 1000;
     const loopTime = loopLength / animationSpeed;
@@ -187,21 +195,21 @@ export class App extends Component {
 
     const roads = this.state.linksData
     const trips = this.state.tripsData
-    const trailLength = 800
+    const trailLength = 180
 
     return [
       new TripsLayer({
         id: 'trips',
         data: trips,
         getPath: d => d.segments,
-        getColor: [23, 184, 190],
+        getColor: [255, 81, 63],
         opacity: 1,
         widthMinPixels: 5,
         rounded: true,
         trailLength,
         currentTime: this.state.time,
         //pickable: true,
-        //onHover: this._onHover
+       // onHover: this._onHover
       }),
       //绘制管线
       new LineLayer({
@@ -211,7 +219,7 @@ export class App extends Component {
         opacity: 0.1,
         getSourcePosition: d => d.start,
         getTargetPosition: d => d.end,
-        getColor: [255, 255, 255],
+        getColor: [157, 211, 217],
         getWidth,
         pickable: true,
         onHover: this._onHover
