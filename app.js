@@ -60,18 +60,18 @@ function path_segments_constructor(data){
   data.forEach(function(d){
 
     let coor =  road_locations_dict[parseInt(d.road_id) + 1]
-    coor[2] = 100 * parseInt(d.round) 
+    let coor2 = [coor[0], coor[1], parseInt(d.round) * 100]
     //console.log(parseInt(d.round) )
-    let occupation = d.occipation
+    //let occupation = d.occipation
 
     if(taxis_segments_bukets[d.taxis_id] == undefined){
 
       taxis_segments_bukets[d.taxis_id] = []
-      taxis_segments_bukets[d.taxis_id].push(coor)
+      taxis_segments_bukets[d.taxis_id].push(coor2)
     }
     else{
 
-      taxis_segments_bukets[d.taxis_id].push(coor)
+      taxis_segments_bukets[d.taxis_id].push(coor2)
     }
   })
 
@@ -187,7 +187,7 @@ export class App extends Component {
 
     const roads = this.state.linksData
     const trips = this.state.tripsData
-    const trailLength = 180
+    const trailLength = 800
 
     return [
       new TripsLayer({
@@ -195,17 +195,20 @@ export class App extends Component {
         data: trips,
         getPath: d => d.segments,
         getColor: [23, 184, 190],
-        opacity: 0.3,
-        widthMinPixels: 2,
+        opacity: 1,
+        widthMinPixels: 5,
         rounded: true,
         trailLength,
-        currentTime: this.state.time
+        currentTime: this.state.time,
+        //pickable: true,
+        //onHover: this._onHover
       }),
       //绘制管线
       new LineLayer({
         id: 'road-paths',
         data: roads,
         fp64: false,
+        opacity: 0.1,
         getSourcePosition: d => d.start,
         getTargetPosition: d => d.end,
         getColor: [255, 255, 255],
